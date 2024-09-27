@@ -59,7 +59,7 @@ case "${cluster}" in
         gpu_arch=70
         launcher=lsf
         ;;
-    tioga)
+    tioga|rzadams|tuolumne)
         cray_libs_dir=${CRAYLIBS_X86_64:-""}
         if [[ -n "${cray_libs_dir}" ]]
         then
@@ -68,14 +68,14 @@ case "${cluster}" in
             extra_rpaths="${ROCM_PATH}/lib:${extra_rpaths}"
         fi
         rocm_platform=ON
-	gpu_arch=gfx90a
+        gpu_arch=gfx90a
         launcher=flux
         ;;
     corona)
         # Only turn on GPU stuff if ROCm module has been loaded, which
         # is checked by testing for ROCM_PATH.
         extra_rpaths=${ROCM_PATH:+${ROCM_PATH}/lib:${extra_rpaths}}
-	gpu_arch=${ROCM_PATH:+gfx906}
+        gpu_arch=${ROCM_PATH:+gfx906}
         if [[ -n "${gpu_arch}" ]]; then
             rocm_platform=ON
         fi
